@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace untitled.Server
 {
-    public class LocalServer
+    public class LocalServer : IServer
     {
         private ILogger _log;
         private NetManager _server;
@@ -35,6 +35,12 @@ namespace untitled.Server
 
             _tickTimer = new Timer(DoServerTick, _tickTimer, System.TimeSpan.Zero, TimeSpan.FromMilliseconds(tickrate));
         }
+
+        public IServer StartServer()
+        {
+            return new LocalServer(9500);
+        }
+
         private void DoServerTick(Object stateInfo)
         {
             _server.PollEvents();
